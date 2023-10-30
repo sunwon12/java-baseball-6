@@ -1,5 +1,7 @@
 package racingcar.constants;
 
+import racingcar.validator.InputValidator;
+
 import java.util.Arrays;
 
 public enum GameStatus {
@@ -12,9 +14,11 @@ public enum GameStatus {
         this.decisionNumber = decisionNumber;
     }
 
-    public static GameStatus apply(int number) {
+    public static GameStatus of(int number) {
+        InputValidator.validateRestartNumber(number);
         return Arrays.stream(GameStatus.values())
                 .filter(status -> status.decisionNumber == number)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(ExceptionMessage.DECISION_NUMBER));
-    }}
+                .orElseThrow();
+    }
+}
